@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Прогноз погоды</h1>
+
+    <label for="city">Введите название города:</label>
+    <input type="text" id="city" placeholder="Город">
+    <button onclick="getWeather()">Получить прогноз</button>
+
+    <div id="weather-info"></div>
+
+    <script>
+        function getWeather() {
+            var apiKey = 'b4fe945dcaa60cafc420e2d385ddc077';
+            var city = document.getElementById('city').value;
+
+            if (city === '') {
+                alert('Введите название города');
+                return;
+            }
+
+            var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === '404') {
+                        alert('Город не найден');
+                        return;
+                    }
+
+                    var weatherInfo = `
+                        <h2>${data.name}, ${data.sys.country}</h2>
+                        <p>Температура: ${Math.round(data.main.temp - 273.15)}°C</p>
+                        <p>Описание: ${data.weather[0].description}</p>
+                    `;
+
+                    document.getElementById('weather-info').innerHTML = weatherInfo;
+                })
+                .catch(error => {
+                    console.error('Ошибка при запросе погоды:', error);
+                });
+        }
+    </script>
+
+</body>
+</html>
