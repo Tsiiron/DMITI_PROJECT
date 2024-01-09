@@ -1,1 +1,1 @@
-open('data.json', 'w').close()
+open('data.json', 'w').close() #функция созданная для отчистки фаила формата json

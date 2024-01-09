@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import calendar
 import re
 import json
-from DMITI_PROJECT.DataParcing.WeatherArchive.Parcer.parcing_functions import *
+from parcing_functions import *
 from headers import *
 import sys
 
@@ -33,3 +33,8 @@ for url in urls:
 print(f'Количество проблемных дат:  {len(date_errors)}\n', *date_errors, sep='\t')
 print(f'Типы ошибок:\n', *type_errors, sep='\t')
 print(f'Суть ошибок:\n', *errors, sep='\t')
+
+'''
+тестовый запуск необходимый для проверки всех дат
+были проблемы с тем что парсер падал на некоторых страницах
+'''
