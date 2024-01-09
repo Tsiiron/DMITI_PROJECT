@@ -1,0 +1,1 @@
+open('data.json', 'w').close()
