@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from headers import headers
+from DMITI_PROJECT.DataParcing.WeatherForcast.headers import headers
 
 def get_temp() -> list:
     response = requests.get("https://www.meteoservice.ru/weather/14days/sankt-peterburg", headers= headers)
