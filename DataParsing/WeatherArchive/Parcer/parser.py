@@ -11,7 +11,7 @@ from headers import *
 if __name__ == '__main__':
     json_data = {}
 
-    start_year= 2013
+    start_year= 2013 #парсинг значений происходит с 2013 по 2022 года
     end_year =2022
 
     start_month = 1
@@ -24,13 +24,13 @@ if __name__ == '__main__':
     errors = []
     
 
-    for url in urls:
+    for url in urls: # парсинг по всем созданным ссылкам
         try:
             parse_result = parse_text(get_temp_str(url))
             print(url[-10:], parse_result)
             key = url[-10:]
             json_data[key] = parse_result
-        except Exception: 
+        except Exception: # вылавливание ошибок
             type_errors.append(sys.exc_info()[1].__class__.__name__)
             errors.append(str(sys.exc_info()[1]))
             date_errors.append(key)
@@ -40,6 +40,5 @@ if __name__ == '__main__':
     print(f'Суть ошибок:\n', *errors, sep='\t')
 
     with open('data.json', 'w') as file:
-        json.dump(json_data, file, indent=2, sort_keys=True)
+        json.dump(json_data, file, indent=2, sort_keys=True) # сохранение полученных данных в формате json
 
-    file.close

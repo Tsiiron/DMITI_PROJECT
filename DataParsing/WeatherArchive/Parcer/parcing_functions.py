@@ -5,9 +5,12 @@ import re
 import json
 from headers import headers
 
-
+'''
+данная функия создает ссылки для парсинга. 
+Все ссылки на сайте имеет подобную стрктуру
+'''
 def url_parser(years : list, months : list) -> list:
-    urls = []
+    urls = []                                   
     for year in range(years[0], years[1] + 1):
         for month in range(months[0], months[1] + 1):
             days = calendar.monthrange(year, month)[1]
@@ -16,12 +19,17 @@ def url_parser(years : list, months : list) -> list:
                 urls.append(url)
     return urls
 
+
+
+#данная функция непосредственно отправляет реквест на сайт и получает нужные данные
 def get_temp_str(url : str) -> str:
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'lxml')
     value = soup.find_all('div', class_='callout')[0].text
     return value
 
+
+#данная функия ищет в тексте температуру днем и ночью
 def find_values(string):
     numbers = re.findall(r'\d+', string)
     for i in range(len(numbers)):
@@ -30,7 +38,7 @@ def find_values(string):
         else:
             numbers[i] = int(numbers[i])
     return numbers
-
+# в этой функции создается словарь значений температур днем и ночью. Ключ дата, значений список температур
 def parse_text(text : str) -> dict:
     first_index = text.find("°")
     second_index = text.find("°", first_index + 1)

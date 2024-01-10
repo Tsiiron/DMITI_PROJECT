@@ -2,18 +2,23 @@ import requests
 from bs4 import BeautifulSoup
 from headers import headers
 
-def get_temp() -> list:
+
+
+#парсинг температуры за последние 14 дней
+def get_temp() -> list: 
     response = requests.get("https://www.meteoservice.ru/weather/14days/sankt-peterburg", headers= headers)
     soup = BeautifulSoup(response.text, 'lxml')
     value = soup.find_all('span', class_='value colorize-server-side')
     return value
 
+#парсинг дат за последние 14 дней
 def get_dates() -> list:
     response = requests.get("https://www.meteoservice.ru/weather/14days/sankt-peterburg", headers= headers)
     soup = BeautifulSoup(response.text, 'lxml')
     value = soup.find_all('div', class_='text-nowrap grey hide-for-large')
     return value
 
+#соранение полученных данных в словарь
 def get_some_days_tmp(days : int) -> list:
     if days <= 0 : return []
     if days >= 14 : days = 14
