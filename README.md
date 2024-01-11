@@ -17,3 +17,7 @@
 `python3 website.py`
 
 После этого создатся локальный сайт с адресом - 127.0.0.1:5000
+
+
+Презентация:
+https://docs.google.com/presentation/d/1g6t991PqSLB3ybFwlUyuHixHkjbKOd9osEzqmjhFmEc/edit#slide=id.g2ae13f7e100_0_178
