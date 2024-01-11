@@ -8,6 +8,10 @@
 
 `pip install Flask`
 
+`pip install BeautifulSoup4`
+
+`pip install lxml`
+
 `cd Website`
 
 `python3 website.py`
