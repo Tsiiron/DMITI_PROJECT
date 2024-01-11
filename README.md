@@ -20,4 +20,4 @@
 
 
 Презентация:
-https://docs.google.com/presentation/d/1g6t991PqSLB3ybFwlUyuHixHkjbKOd9osEzqmjhFmEc/edit#slide=id.g2ae13f7e100_0_178
+https://docs.google.com/presentation/d/1g6t991PqSLB3ybFwlUyuHixHkjbKOd9osEzqmjhFmEc/edit#slide=id.p
