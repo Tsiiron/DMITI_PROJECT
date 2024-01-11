@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз погоды</title>
+    <style>
+        #forecast-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #weather-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .block-container {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            display : flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 35px;
+        }
+
+        .block-container.ten-day {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            display : flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .block-container.ten-day .weather-block {
+            width: calc(20% - 35px);
+        }
+
+        .block {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .weather-block {
+            border: 1px solid black;
+            margin: 10px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .temperature-container {
+        display: flex;
+        justify-content: space-between;
+        }
+
+        .temperature {
+            width: 50%;
+            padding: 10px;
+        }
+
+        .day {
+            background-color: #50C878;
+        }
+
+        .night {
+            background-color: #FF8000;
+        }
+
+        .true {
+            background-color: #50C878;
+        }
+
+        .false {
+            background-color: #FF8000;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="forecast-title">Оценка правильности прогнозов погоды</h1>
+    <div id="weather-buttons">
+        <button id="btn7days">Прогноз на 7 дней</button>
+        <button id="btn10days">Прогноз на 10 дней</button>
+    </div>
+    <div id="weather-result" class="block-container"></div>
+
+    <script>
+        document.getElementById('btn7days').addEventListener('click', function() {
+            fetchWeatherForecast(7);
+        });
+
+        document.getElementById('btn10days').addEventListener('click', function() {
+            fetchWeatherForecast(10);
+        });
+
+        function fetchWeatherForecast(days) {
+            fetch('/weather?days=' + days)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    var resultDiv = document.getElementById('weather-result');
+                    resultDiv.innerHTML = '';
+                    resultDiv.className = days === 10 ? 'block-container ten-day' : 'block-container';
+
+                    for (var date in data) {
+                        var dayNight = data[date];
+                        var dayTemp = dayNight[0][0];
+                        var nightTemp = dayNight[0][1];
+                        var dayTruth = dayNight[2][0];
+                        var nightTruth = dayNight[2][1];
+
+                        var weatherBlock = document.createElement('div');
+                        weatherBlock.className = 'weather-block';
+
+                        var dateHeader = document.createElement('h2');
+                        dateHeader.textContent = date;
+                        weatherBlock.appendChild(dateHeader);
+
+                        var tempContainer = document.createElement('div');
+                        tempContainer.className = 'temperature-container';
+
+                        var dayTempDiv = document.createElement('div');
+                        dayTempDiv.className = 'temperature day' + (dayTruth ? ' true' : ' false');
+                        dayTempDiv.textContent = 'Днём: ' + dayTemp + '°';
+                        tempContainer.appendChild(dayTempDiv);
+
+                        var nightTempDiv = document.createElement('div');
+                        nightTempDiv.className = 'temperature night' + (nightTruth ? ' true' : ' false');
+                        nightTempDiv.textContent = 'Ночью: ' + nightTemp + '°';
+                        tempContainer.appendChild(nightTempDiv);
+
+                        weatherBlock.appendChild(tempContainer);
+
+                        resultDiv.appendChild(weatherBlock);
+                    }
+                })
+            .catch(function(error) {
+                console.error('Error fetching weather:', error);
+            });
+        }
+    </script>
+</body>
+</html>

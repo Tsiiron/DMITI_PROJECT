@@ -1,8 +1,8 @@
 import json
 
-confidence = 0.9
-significance = 1 - confidence
-t_distribution = 1.833
+confidence = 0.95                # betta
+significance = 1 - confidence    # alpha
+t_distribution = 2.29
 
 def create_interval(data : list) -> list:
     n = len(data)
